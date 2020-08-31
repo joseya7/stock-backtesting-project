@@ -1,0 +1,4 @@
+export const ADD_PORTFOLIO = 'ADD_PORTFOLIO'
+export const GET_PORTFOLIO = 'GET_PORTFOLIO'
+export const GET_STOCKS = 'GET_STOCKS'
+export const REMOVE_PORTFOLIO = 'REMOVE_PORTFOLIO'
