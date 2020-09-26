@@ -5,12 +5,15 @@ import { portfolioDescCalculator } from '../../utils/dataPreprocessing'
 const PortfolioResultsSummaryAnnual = ({ portfolios }) => {
   const { startYear, endYear, portfolioWrapper, initialAmount } = portfolios
 
+  console.log(portfolios)
   const labelList = []
   for (let i = +startYear + 1; i < +endYear; i++) {
     labelList.push(i)
   }
 
   const temp2 = portfolioDescCalculator(portfolioWrapper, initialAmount)
+
+  console.log(temp2)
 
   const data1 = Array.from(temp2[0].yearlySummary.annualGrowthRate, (x) => +x)
   const data2 = Array.from(temp2[1].yearlySummary.annualGrowthRate, (x) => +x)

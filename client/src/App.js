@@ -9,7 +9,6 @@ import store from './store'
 import Navbar from './components/layout/Navbar'
 import PortfolioFormMain from './components/portfolio-forms/PortfolioFormMain'
 import PortfolioResultsMain from './components/portfolio-results/PortfolioResultsMain'
-import PortfolioResults from './components/portfolio-results/PortfolioResult'
 
 function App() {
   return (

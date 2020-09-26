@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import PortfolioResultsSummary from './PortfolioResultsSummary'
@@ -10,11 +10,9 @@ import { getPortfolio } from '../../actions/portfolioActions'
 const PortfolioResultsMain = ({ portfolio: { portfolios, loading } }) => {
   const [key, setKey] = useState('summary')
   if (loading || portfolios === null) {
-    return <h3></h3>
+    return <h3> </h3>
   }
   const endMonth = portfolios.endYear === '2020' ? '07' : '12'
-  console.log(portfolios.endYear)
-  console.log(endMonth)
 
   return (
     <Fragment>

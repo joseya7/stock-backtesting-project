@@ -41,11 +41,13 @@ export const port1Extractor = (obj) => {
 
 export const port2Extractor = (obj) => {
   const extractList = []
+
   for (var key in obj) {
     if (/assetPercentage2_\d/g.test(key)) {
       extractList.push(obj[key])
     }
   }
+
   return extractList
 }
 

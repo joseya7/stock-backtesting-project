@@ -14,6 +14,8 @@ import {
   port3Extractor,
 } from '../utils/formUtils'
 
+import {tickerDateData as startDateObj} from '../fixtures/ticker-date'
+
 export const getPortfolio = () => async (dispatch) => {
   const res = await axios.get('/api/v1/portfolios')
 
@@ -31,141 +33,156 @@ export const temp = (
   percentage2,
   percentage3
 ) => async (dispatch) => {
-  dispatch({
-    type: REMOVE_PORTFOLIO,
-  })
-  const { startYear, endYear, initialAmount } = formData
-  const pairObj = {
-    '051900': 'LG생활건강',
-    '035420': 'NAVER',
-    '000660': 'SK하이닉스',
-    '028260': '삼성물산',
-    '005930': '삼성전자',
-    '068270': '셀트리온',
-    '096530': '씨젠',
-    '035720': '카카오',
-    '003480': '한진중공업홀딩스',
-    '005380': '현대차',
-  }
-
-  clean(portfolioData)
-
-  const assetList = assetExtractor(portfolioData)
-
-  const assetPercentage1 = port1Extractor(percentage1.percentage1)
-  const assetPercentage2 = port2Extractor(percentage2.percentage2)
-  const assetPercentage3 = port3Extractor(percentage3.percentage3)
-
-  const startDateObj = {
-    '051900': '2001-04-01',
-    '035420': '2002-11-01',
-    '000660': '1996-12-01',
-    '028260': '2014-12-01',
-    '005930': '1996-10-01',
-    '068270': '2005-07-01',
-    '096530': '2010-09-01',
-    '035720': '1999-11-01',
-    '003480': '1996-10-01',
-    '005380': '1996-10-01',
-  }
-
-  const getStartDate = (startDateObj, assetList) => {
-    const assets = Object.values(assetList)
-    const extractDateList = []
-    assets.map((asset) => {
-      for (let key in startDateObj) {
-        if (key === asset) {
-          const data = { date: startDateObj[asset], asset }
-          extractDateList.push(data)
-        }
-      }
+  try {
+    dispatch({
+      type: REMOVE_PORTFOLIO,
     })
+    const { endYear, initialAmount } = formData
+    const pairObj = {
+      '051900': 'LG생활건강',
+      '035420': 'NAVER',
+      '000660': 'SK하이닉스',
+      '028260': '삼성물산',
+      '005930': '삼성전자',
+      '068270': '셀트리온',
+      '096530': '씨젠',
+      '035720': '카카오',
+      '003480': '한진중공업홀딩스',
+      '005380': '현대차',
+    }
 
-    const mostRecentDate = new Date(
-      Math.max.apply(
-        null,
-        extractDateList.map((e) => {
-          return new Date(e.date)
-        })
+    clean(portfolioData)
+
+    console.log(formData)
+    console.log(portfolioData)
+    console.log(percentage1)
+    const assetList = assetExtractor(portfolioData)
+    console.log(assetList)
+
+    const assetPercentage1 = port1Extractor(percentage1.percentage1)
+    const assetPercentage2 = port2Extractor(percentage2.percentage2)
+    const assetPercentage3 = port3Extractor(percentage3.percentage3)
+
+    // const startDateObj = {
+    //   '051900': '2001-04-01',
+    //   '035420': '2002-11-01',
+    //   '000660': '1996-12-01',
+    //   '028260': '2014-12-01',
+    //   '005930': '1996-10-01',
+    //   '068270': '2005-07-01',
+    //   '096530': '2010-09-01',
+    //   '035720': '1999-11-01',
+    //   '003480': '1996-10-01',
+    //   '005380': '1996-10-01',
+    // }
+
+    const getStartDate = (startDateObj, assetList) => {
+      const extractDateList = assetList.map((asset) => {
+        return { date: startDateObj[asset], asset }
+      })
+
+      const mostRecentDate = new Date(
+        Math.max.apply(
+          null,
+          extractDateList.map((e) => {
+            return new Date(e.date)
+          })
+        )
       )
-    )
-    const mostRecentObject = extractDateList.filter((e) => {
-      const d = new Date(e.date)
-      return d.getTime() == mostRecentDate.getTime()
-    })[0]
-    return mostRecentObject
-  }
-
-  const mostRecentObject = getStartDate(startDateObj, assetList)
-  const trimmedStartDate = new Date(mostRecentObject.date).getFullYear() + 1
-
-  const aggregate = {
-    id: 920102,
-    trimmedOf: mostRecentObject.asset,
-    startYear: trimmedStartDate,
-    endYear,
-    initialAmount,
-  }
-  const start = aggregate.startYear + '-01-01'
-  let end = ''
-  if (endYear === '2020') {
-    end = endYear + '-07-31'
-  } else {
-    end = endYear + '-12-31'
-  }
-
-  const portfolio1Wrapper = {
-    portfolioName: 'Portfolio1',
-    portfolio: [],
-  }
-  const portfolio2Wrapper = {
-    portfolioName: 'Portfolio2',
-    portfolio: [],
-  }
-
-  const portfolio3Wrapper = {
-    portfolioName: 'Portfolio3',
-    portfolio: [],
-  }
-
-  for (let i = 0; i < assetList.length; i++) {
-    const res = await axios.get(
-      `/api/v1/stocks/${assetList[i]}/${start}/${end}`
-    )
-    const data = await res.data.data
-    const item1 = {
-      asset: assetList[i],
-      name: pairObj[assetList[i]],
-      assetPercentage: assetPercentage1[i],
-      intervalPrice: data,
+      const mostRecentObject = extractDateList.filter((e) => {
+        const d = new Date(e.date)
+        return d.getTime() === mostRecentDate.getTime()
+      })[0]
+      return mostRecentObject
     }
-    portfolio1Wrapper.portfolio.push(item1)
-    const item2 = {
-      asset: assetList[i],
-      name: pairObj[assetList[i]],
-      assetPercentage: assetPercentage2[i],
-      intervalPrice: data,
+
+    const mostRecentObject = getStartDate(startDateObj, assetList)
+    const trimmedStartDate = new Date(mostRecentObject.date).getFullYear() + 1
+
+    const aggregate = {
+      id: 920102,
+      trimmedOf: mostRecentObject.asset,
+      startYear: trimmedStartDate,
+      endYear,
+      initialAmount,
     }
-    portfolio2Wrapper.portfolio.push(item2)
-    const item3 = {
-      asset: assetList[i],
-      name: pairObj[assetList[i]],
-      assetPercentage: assetPercentage3[i],
-      intervalPrice: data,
+    const start = aggregate.startYear + '-01-01'
+    let end = ''
+    if (endYear === '2020') {
+      end = endYear + '-07-31'
+    } else {
+      end = endYear + '-12-31'
     }
-    portfolio3Wrapper.portfolio.push(item3)
+
+    const portfolio1Wrapper = {
+      portfolioName: 'Portfolio1',
+      portfolio: [],
+    }
+    const portfolio2Wrapper = {
+      portfolioName: 'Portfolio2',
+      portfolio: [],
+    }
+
+    const portfolio3Wrapper = {
+      portfolioName: 'Portfolio3',
+      portfolio: [],
+    }
+
+    for (let i = 0; i < assetList.length; i++) {
+      console.log(assetList)
+      console.log(start)
+      console.log(end)
+      
+
+      const res = await axios.get(
+        `/api/v1/stocks/${assetList[i]}/${start}/${end}`
+      )
+
+      const data = await res.data.data
+      console.log(data)
+
+      const item1 = {
+        asset: assetList[i],
+        name: data[0].Name,
+        assetPercentage: assetPercentage1[i],
+        intervalPrice: data,
+      }
+      portfolio1Wrapper.portfolio.push(item1)
+      const item2 = {
+        asset: assetList[i],
+        name: data[0].Name,
+        assetPercentage: assetPercentage2[i],
+        intervalPrice: data,
+      }
+      portfolio2Wrapper.portfolio.push(item2)
+      const item3 = {
+        asset: assetList[i],
+        name: data[0].Name,
+        assetPercentage: assetPercentage3[i],
+        intervalPrice: data,
+      }
+      portfolio3Wrapper.portfolio.push(item3)
+    }
+    const tempWrapper = [
+      portfolio1Wrapper,
+      portfolio2Wrapper,
+      portfolio3Wrapper,
+    ]
+    aggregate['portfolioWrapper'] = tempWrapper
+
+    // dispatch({
+    //   type: REMOVE_PORTFOLIO,
+    // })
+
+    
+
+    dispatch({
+      type: ADD_PORTFOLIO,
+      payload: aggregate,
+    })
+  } catch (error) {
+    console.log(error)
   }
-  const tempWrapper = [portfolio1Wrapper, portfolio2Wrapper, portfolio3Wrapper]
-  aggregate['portfolioWrapper'] = tempWrapper
-
-  // dispatch({
-  //   type: REMOVE_PORTFOLIO,
-  // })
-
-  dispatch({
-    type: ADD_PORTFOLIO,
-    payload: aggregate,
-  })
 }
 
 export const addPortfolio = (formData, portfolioData) => async (dispatch) => {

@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react'
 
-import { connect } from 'react-redux'
-
 import PortfolioResultsSummaryAllocations from './PortfolioResultsSummaryAllocations'
-import PortfolioResultsSummaryReturns from './PortfolioResultsSummaryReturns'
+import PortfolioResultsSummaryStats from './PortfolioResultsSummaryStats'
 import PortfolioResultsSummaryAnnual from './PortfolioResultsSummaryAnnual'
-import PortfolioResultsSummaryBalance from './PortfolioResultsSummaryBalance'
+import PortfolioResultsSummaryMonthly from './PortfolioResultsSummaryMonthly'
 const PortfolioResultsSummary = ({ portfolios }) => {
   return (
     <Fragment>
@@ -15,13 +13,13 @@ const PortfolioResultsSummary = ({ portfolios }) => {
         <PortfolioResultsSummaryAllocations portfolios={portfolios} />
 
         {/* <!-- Portfolio Returns --> */}
-        <PortfolioResultsSummaryReturns portfolios={portfolios} />
+        <PortfolioResultsSummaryStats portfolios={portfolios} />
 
         {/* <!-- Annual Returns --> */}
         <PortfolioResultsSummaryAnnual portfolios={portfolios} />
 
-        {/* Monthly Balance */}
-        <PortfolioResultsSummaryBalance portfolios={portfolios} />
+        {/* Monthly Monthly */}
+        <PortfolioResultsSummaryMonthly portfolios={portfolios} />
       </div>
     </Fragment>
   )

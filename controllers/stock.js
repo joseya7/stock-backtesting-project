@@ -21,7 +21,9 @@ exports.getStocksByDate = async (req, res) => {
         $gte: start,
         $lt: end,
       },
-    }).sort({ Date: 'asc' })
+    })
+    .sort({ Date: 'asc' })
+    console.log(stocks)
 
     if (!stocks) {
       return res.status(404).json({

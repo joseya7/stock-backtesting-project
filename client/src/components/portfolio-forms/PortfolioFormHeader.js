@@ -20,12 +20,14 @@ const PortfolioFormHeader = () => {
         <div class="container">
           <div class="row">
             <div class="col">
-              <h1 class="text-center">How can I do this?</h1>
+              <h1 class="text-center">어떻게 하나요?!</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident ex commodi itaque unde ratione quia quae iusto totam
-                nam adipisci? Maxime, illo quae. Molestiae quos laboriosam ad
-                voluptatibus neque modi.
+                1.시작년도, 끝년도, 초기자본을 설정해주세요!
+                (예 : 1985, 2020, 1000000)
+                <br/>
+                2.원하는 주식종목을 골라서 포트폴리오를 구성하세요
+                <br/>
+                3.주식종목의 총합은 100%가 되어야 합니다!
               </p>
             </div>
           </div>

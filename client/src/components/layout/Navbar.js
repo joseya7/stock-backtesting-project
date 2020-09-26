@@ -2,43 +2,46 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <div class="container">
-        <a href="index.html" class="navbar-brand">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div className="container">
+        <a href="index.html" className="navbar-brand">
           Portfolio Backtest
         </a>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active mx-2">
-              <a href="index.html" class="nav-link">
+        <div className="collapse navbar-collapse" id="navbarCollapse">
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item active mx-2">
+              <a href="index.html" className="nav-link">
                 Example
               </a>
             </li>
-            <li class="nav-item mx-2">
-              <a href="about.html" class="nav-link">
+            <li className="nav-item mx-2">
+              <a href="about.html" className="nav-link">
                 About Me
               </a>
             </li>
-            <li class="nav-item mx-2">
-              <a href="services.html" class="nav-link">
+            <li className="nav-item mx-2">
+              <a href="services.html" className="nav-link">
                 Tools
               </a>
             </li>
-            <li class="nav-item mx-2">
-              <a href="services.html" class="nav-link">
+            <li className="nav-item mx-2">
+              <a href="services.html" className="nav-link">
                 FAQ
               </a>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <a
-                href="#"
-                class="nav-link btn btn-warning btn-sm text-white mx-2"
+                href="#!"
+                className="nav-link btn btn-warning btn-sm text-white mx-2"
               >
                 Sign Up
               </a>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link btn btn-primary btn-sm text-white">
+            <li className="nav-item">
+              <a
+                href="#!"
+                className="nav-link btn btn-primary btn-sm text-white"
+              >
                 Login
               </a>
             </li>

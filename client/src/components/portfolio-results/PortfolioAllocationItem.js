@@ -1,26 +1,27 @@
 import React, { Fragment } from 'react'
 import { Pie } from 'react-chartjs-2'
-import { dataMassage, chartDataConverter } from '../../utils/formUtils'
+import { chartDataConverter } from '../../utils/formUtils'
 const PortfolioAllocationItem = ({ data }) => {
   const { portfolioName } = data
+  console.log(data)
 
   // const stock = portfolios.filter((item) => {
   //   return item.assetPercentage !== undefined
   // })
   // cosnsole.log(stock)
 
-  const tickerNameObj = {
-    '051900': 'LG생활건강',
-    '035420': 'NAVER',
-    '000660': 'SK하이닉스',
-    '028260': '삼성물산',
-    '005930': '삼성전자',
-    '068270': '셀트리온',
-    '095630': '씨젠',
-    '035720': '카카오',
-    '003480': '한진중공업홀딩스',
-    '005380': '현대차',
-  }
+  // const tickerNameObj = {
+  //   '051900': 'LG생활건강',
+  //   '035420': 'NAVER',
+  //   '000660': 'SK하이닉스',
+  //   '028260': '삼성물산',
+  //   '005930': '삼성전자',
+  //   '068270': '셀트리온',
+  //   '095630': '씨젠',
+  //   '035720': '카카오',
+  //   '003480': '한진중공업홀딩스',
+  //   '005380': '현대차',
+  // }
   const chartData = chartDataConverter(data.portfolio)
   const options = {
     tooltips: {

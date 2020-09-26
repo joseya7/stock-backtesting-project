@@ -15,6 +15,8 @@
     "concurrently": "^5.3.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "colors": "^1.4.0",

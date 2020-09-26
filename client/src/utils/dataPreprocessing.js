@@ -1,5 +1,6 @@
 export const portfolioMonthlyBalance = (portfolio, initialAmount) => {
   //item은 각각의 asset
+  console.log(portfolio)
   const yearAggMatrix = portfolio.map((item) => {
     const mList = []
     for (let i = 0; i < item.intervalPrice.length; i++) {
@@ -40,41 +41,58 @@ export const placeDecimalPoint = (value, decimalPlaces) => {
 }
 
 export const yearlyGrowthSummary = (monthlyBalanceList, portfolio) => {
-  const dateList = []
-  portfolio[0].intervalPrice.map((i) => {
-    dateList.push(i.Date)
-  })
-  console.log(portfolio[0].intervalPrice)
+  /* Date : 1985~2019 => 결과 : 2002~2019  
+/*
+  portfolio = [{
+    asset : "051900",
+    name : "LG생활건강"
+    assetPercentage : 100,
+    intervalPrice = [{
+      id:5f4
+      Date:"2002-01-01"
+      Knicker:"051900"
+      Name:"LG생활건강"
+      Price:40600
+    }]
+  }]
+*/
+
+  /*
+  monthlyBalanceList = [
+    897783, 1108374.38, ....
+  ]
+*/
+  console.log(portfolio[0])
+
+  const dateList = portfolio[0].intervalPrice.map((item) => item.Date)
+
+  // const newIndexList = dateList
+  //   .filter((date) => new Date(date).getMonth() === 11)
+  //   .map((date) => new Date(date))
+  // console.log(newIndexList)
   console.log(dateList)
-  console.log(monthlyBalanceList)
+
   const indexList = []
   for (let i = 0; i < dateList.length; i++) {
     if (new Date(dateList[i]).getMonth() === 11) {
       indexList.push(i)
     }
   }
-  console.log(indexList)
 
+  console.log(indexList)
+  const newmb = [...monthlyBalanceList]
+
+  console.log(newmb)
   const yearlyGrowthRate = []
   for (let i = 1; i < indexList.length; i++) {
     const prev = indexList[i - 1]
     const next = indexList[i]
-    console.log(+monthlyBalanceList[next])
-    console.log(+monthlyBalanceList[prev])
-    console.log(+monthlyBalanceList[next] - +monthlyBalanceList[prev])
-    console.log(
-      (+monthlyBalanceList[next] - +monthlyBalanceList[prev]) /
-        +monthlyBalanceList[prev]
-    )
 
-    const growthRate =
-      ((+monthlyBalanceList[next] - +monthlyBalanceList[prev]) /
-        +monthlyBalanceList[prev]) *
-      100
-    console.log(growthRate)
+    const growthRate = ((+newmb[next] - +newmb[prev]) / +newmb[prev]) * 100
 
-    yearlyGrowthRate.push(placeDecimalPoint(growthRate, 2))
+    growthRate && yearlyGrowthRate.push(placeDecimalPoint(growthRate, 2))
   }
+  console.log(yearlyGrowthRate)
 
   return {
     max: Math.max(...yearlyGrowthRate),
@@ -90,15 +108,13 @@ export const yearlyGrowthSummary = (monthlyBalanceList, portfolio) => {
 //Final Balance Calculator
 export const finalBalanceCalculator = (portfolioWrapper, initialAmount) => {
   const finalBalanceWrapper = portfolioWrapper.map((strategy) => {
-    const resultList = []
     const finalBalanceWrapper = []
-    strategy.portfolio.map((item) => {
+    const resultList = strategy.portfolio.map((item) => {
       const weight =
         item.intervalPrice[item.intervalPrice.length - 1].Price /
         item.intervalPrice[0].Price
       const money = (item.assetPercentage / 100) * initialAmount
-      const result = weight * money
-      resultList.push(result)
+      return weight * money
     })
     const finalBalance = ~~resultList.reduce((acc, sum) => acc + sum, 0)
     finalBalanceWrapper.push(finalBalance)
@@ -111,15 +127,13 @@ export const finalBalanceCalculator = (portfolioWrapper, initialAmount) => {
 //CAGR Calculator
 export const CAGRCalculator = (portfolioWrapper, startYear, endYear) => {
   const CAGRwrapper = portfolioWrapper.map((strategy) => {
-    const CAGRList = []
     const CAGRWrapper = []
-    strategy.portfolio.map((item) => {
+    const CAGRList = strategy.portfolio.map((item) => {
       const firstSide =
         item.intervalPrice[item.intervalPrice.length - 1].Price /
         item.intervalPrice[0].Price
       const exponential = 1 / (+endYear - +startYear)
-      const CAGRresult = Math.pow(firstSide, exponential) - 1
-      CAGRList.push(CAGRresult)
+      return Math.pow(firstSide, exponential) - 1
     })
     const CAGR =
       CAGRList.reduce((sum, value) => sum + value, 0) / CAGRList.length
@@ -130,8 +144,7 @@ export const CAGRCalculator = (portfolioWrapper, startYear, endYear) => {
 }
 //Yearly, Monthly Return,  Std, Avg, Max, Min
 export const portfolioDescCalculator = (portfolioWrapper, initialAmount) => {
-  const portfolioWrapperDesc = []
-  portfolioWrapper.map((portfolio) => {
+  const portfolioWrapperDesc = portfolioWrapper.map((portfolio) => {
     const monthlyBalance = portfolioMonthlyBalance(
       portfolio.portfolio,
       initialAmount
@@ -140,11 +153,10 @@ export const portfolioDescCalculator = (portfolioWrapper, initialAmount) => {
       monthlyBalance,
       portfolio.portfolio
     )
-    const obj = {
+    return {
       monthlyBalance,
       yearlySummary,
     }
-    portfolioWrapperDesc.push(obj)
   })
   return portfolioWrapperDesc
 }
@@ -165,7 +177,7 @@ function standardDeviation(values) {
   return stdDev
 }
 
-const getColMean = (matrix, col) => {
+export const getColMean = (matrix, col) => {
   var column = []
   for (var i = 0; i < matrix.length; i++) {
     column.push(matrix[i][col])
@@ -176,7 +188,7 @@ const getColMean = (matrix, col) => {
   return yearAvgMean
 }
 
-const getColSum = (matrix, col) => {
+export const getColSum = (matrix, col) => {
   var column = []
   for (var i = 0; i < matrix.length; i++) {
     column.push(matrix[i][col])
