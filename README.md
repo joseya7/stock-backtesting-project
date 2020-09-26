@@ -48,4 +48,4 @@
     }
     ```
   * 다음 프로젝트부터는 map, filter, reduce 배열 메서드를 주로 사용하려고 노력해야겠다.
-  * 워본배열을 조작하는 메서드들 push, pop, shift, unshift, splice의 사용은 지양해야겠다.
+  * 원본배열을 조작하는 메서드들 push, pop, shift, unshift, splice의 사용은 지양해야겠다.
