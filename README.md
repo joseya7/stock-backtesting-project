@@ -2,7 +2,7 @@
 
 ## 개요
 
-1. 저의 **첫** 웹 개발 프로젝트입니다. 최대한 디버깅을 했지만, 아직 부족한 부분이 많은사이트입니다.ㅜㅜ
+1. 저의 **첫** 웹 개발 프로젝트입니다. 최대한 디버깅을 했지만, 아직 부족한 부분이 많은사이트입니다.
 2. 사용한 프레임워크 : **React, Redux, Boostrap, Material-UI, Node.js, MongoDB, Express.js**
 3. 배포 : heroku
 4. **_LIVE_** : https://enigmatic-sierra-41569.herokuapp.com/
