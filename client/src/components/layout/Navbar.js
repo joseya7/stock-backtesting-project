@@ -21,7 +21,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item mx-2">
               <a href="services.html" className="nav-link">
-                Tools
+                Tool
               </a>
             </li>
             <li className="nav-item mx-2">
